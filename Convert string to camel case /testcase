@@ -1,1 +1,67 @@
+// THESE ARE NOT WROTE BY ME
+#include <cstdio>
+#include <cstdlib>
+#include <string>
+#include <ctime>
 
+
+Describe(Testing_function_to_camel_case)
+{
+    It(Basic_tests)
+    {
+        Assert::That(to_camel_case(""), Equals(""), ExtraMessage("Incorrect answer for input: \"\""));
+        Assert::That(to_camel_case("the_stealth_warrior"), Equals("theStealthWarrior"), ExtraMessage("Incorrect answer for input: \"the_stealth_warrior\""));
+        Assert::That(to_camel_case("The-Stealth-Warrior"), Equals("TheStealthWarrior"), ExtraMessage("Incorrect answer for input: \"The-Stealth-Warrior\""));
+        Assert::That(to_camel_case("A-B-C"), Equals("ABC"), ExtraMessage("Incorrect answer for input: \"A-B-C\""));
+
+    }
+    It(Random_tests)
+    {
+        srand (time(NULL));
+        std::string word = "";
+
+        std::string new_word = "";
+        std::string camel_sol = "";
+        for(int i = 0; i < 10; i++) 
+        {
+            std::string words[]= {"the", "The", "a", "A"};
+            new_word = words[rand() % 4];
+            camel_sol += new_word;
+            word += new_word;
+            
+            std::string words2[]= {"-", "_"};
+            word += words2[rand() % 2];
+
+            std::string words3[]= {"cat", "Cat", "pippi", "Pippi"};
+            new_word = words3[rand() % 4];
+            camel_sol += (new_word == "cat" || new_word == "Cat") ? "Cat" : "Pippi";
+            word += new_word;
+            
+            word += words2[rand() % 2];
+            
+            std::string words4[]= {"is", "was", "Is", "Was"};
+            new_word = words4[rand() % 4];
+            camel_sol += (new_word == "is" || new_word == "Is") ? "Is" : "Was";
+            word += new_word;
+            
+            word += words2[rand() % 2];
+            
+            std::string words5[]= {"cute","Savage","pippi","Pippi","kawaii",
+                                  "Omoshiroi","evil","Hungry"};
+            new_word = words5[rand() % 8];
+                        if (new_word == "cute") { camel_sol += "Cute"; }
+            else if (new_word == "Savage") { camel_sol += "Savage"; }
+            else if (new_word == "pippi" || new_word == "Pippi") 
+            { 
+                camel_sol += "Pippi"; 
+            }
+            else if (new_word == "kawaii") { camel_sol += "Kawaii"; }
+            else if (new_word == "Omoshiroi") { camel_sol += "Omoshiroi"; }
+
+            else if (new_word == "evil") { camel_sol += "Evil"; }
+            else if (new_word == "Hungry") { camel_sol += "Hungry"; }
+            word += new_word;
+            Assert::That(to_camel_case(word), Equals(camel_sol), ExtraMessage("Incorrect answer for input: \"" + word + "\""));
+        }
+    }
+};
